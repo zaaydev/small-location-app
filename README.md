@@ -53,7 +53,6 @@ How to **deploy an EJS-based Node.js app** on platforms like Render
 - 🌍 Understanding OSM tile system (z/x/y)\
 - 📡 Using `navigator.geolocation`\
 - 🚀 Deploying Node.js + EJS apps\
-- ⚠️ Handling dynamic ports (`process.env.PORT`)
 
 ---
 

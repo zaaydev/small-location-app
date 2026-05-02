@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=yo">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+
+<body>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+        }
+
+        #map {
+            height: 100vh;
+        }
+    </style>
+
+    <main id="map"></main>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 🗺️ WHAT: Create a Leaflet map instance inside the div with id="map"
+        // ❓ WHY: Leaflet needs a container element to render the map UI
+        const map_structure = L.map("map");
+
+
+        // 🎯 WHAT: Set initial view (latitude, longitude, zoom level)
+        // ❓ WHY: Defines where the map starts before user location is fetched
+        map_structure.setView([21.1702, 72.8311], 12);
+
+
+        // 🧱 WHAT: Load map tiles from OpenStreetMap
+        // ❓ WHY: Leaflet doesn't provide map visuals by default → tiles give actual map images
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: '© OpenStreetMap contributors' // ⚖️ required credit
+            }
+        ).addTo(map_structure); // 👉 attach tiles to map
+
+
+        // 📍 WHAT: Get user's current location using browser API
+        // ❓ WHY: To center map dynamically based on real user position
+        navigator.geolocation.getCurrentPosition((userLocationData) => {
+
+            // 📌 WHAT: Extract latitude & longitude from response
+            // ❓ WHY: Needed to position map and marker correctly
+            const latitude = userLocationData.coords.latitude;
+            const longitude = userLocationData.coords.longitude;
+
+
+            // 🎯 WHAT: Update map view to user's location with higher zoom
+            // ❓ WHY: Zoom 18 gives close-up (street-level feel)
+            map_structure.setView([latitude, longitude], 16);
+
+
+            // 📌 WHAT: Add marker at user's location
+            // ❓ WHY: Visual indicator so user knows "this is me"
+            L.marker([latitude, longitude]).addTo(map_structure);
+
+        });
+
+    </script>
+</body>
+
+</html>
